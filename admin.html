@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>Адмінка Мультипіч</title>
+<style>
+body { font-family: Arial; background:#111; color:#fff; max-width:400px; margin:auto; padding:20px; }
+input { width:100%; margin-top:10px; padding:10px; font-size:16px; }
+button { width:100%; margin-top:15px; padding:12px; background:gold; border:none; font-weight:bold; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<h2>Адмінка – Ціни товару</h2>
+
+<input id="oldPrice" placeholder="Стара ціна" type="number">
+<input id="newPrice" placeholder="Нова ціна" type="number">
+
+<button onclick="savePrices()">Зберегти ціни</button>
+
+<div id="status" style="margin-top:10px;"></div>
+
+<script>
+function savePrices() {
+    const oldPrice = document.getElementById('oldPrice').value;
+    const newPrice = document.getElementById('newPrice').value;
+
+    if (!oldPrice || !newPrice) {
+        document.getElementById('status').textContent = "Введіть обидві ціни!";
+        return;
+    }
+
+    const product = { oldPrice, newPrice };
+    localStorage.setItem('productPrice', JSON.stringify(product));
+    document.getElementById('status').textContent = "Ціни збережено!";
+}
+
+// Підвантажуємо ціни при відкритті адмінки
+window.onload = function() {
+    const product = JSON.parse(localStorage.getItem('productPrice'));
+    if (product) {
+        document.getElementById('oldPrice').value = product.oldPrice;
+        document.getElementById('newPrice').value = product.newPrice;
+    }
+};
+</script>
+
+</body>
+</html>
